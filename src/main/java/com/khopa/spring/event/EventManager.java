@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface EventManager {
 
-    void fire(String event);
-
     void fire(String event, Object... params);
 
     void subscribe(Object subscriber);

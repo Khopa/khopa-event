@@ -3,6 +3,7 @@ package com.khopa.spring.event.impl;
 import com.khopa.spring.event.EventManager;
 import com.khopa.spring.event.annotations.Consume;
 import com.khopa.spring.event.models.Subscription;
+import lombok.Synchronized;
 import lombok.extern.apachecommons.CommonsLog;
 
 import javax.annotation.PostConstruct;
@@ -11,68 +12,40 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @CommonsLog
 public class SimpleEventManager implements EventManager {
 
-    private HashMap<String, List<Subscription>> subscribers;
+    private ConcurrentHashMap<String, List<Subscription>> subscribers;
 
     @PostConstruct
     public void init(){
-        subscribers = new HashMap<String, List<Subscription>>();
-    }
-
-    public void fire(String event) {
-        System.out.println("FIRE " +event);
-        List<Subscription> subscriptions = subscribers.get(event.toLowerCase());
-        List<Subscription> expired =  new ArrayList<Subscription>();
-        if(subscriptions == null) return;
-        for(Subscription subscription: subscriptions){
-            try {
-                Object result = subscription.getConsumer().invoke(subscription.getSubscriber());
-                subscription.setMaxConsumption(subscription.getMaxConsumption()-1);
-                if(subscription.getMaxConsumption() == 0){
-                    expired.add(subscription);
-                }
-                if(result instanceof Boolean){
-                    if((Boolean) result){
-                        log.info(event + " consumed");
-                        break;
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-        subscriptions.removeAll(expired);
+        subscribers = new ConcurrentHashMap<>();
     }
 
     public void fire(String event, Object... params) {
-        System.out.println("FIRE " +event);
         List<Subscription> subscriptions = subscribers.get(event.toLowerCase());
         List<Subscription> expired =  new ArrayList<Subscription>();
         if(subscriptions == null) return;
         for(Subscription subscription: subscriptions){
+            Object result = null;
             try {
-                Object result = subscription.getConsumer().invoke(subscription.getSubscriber(), params);
-                subscription.setMaxConsumption(subscription.getMaxConsumption()-1);
-                if(subscription.getMaxConsumption() == 0){
-                    expired.add(subscription);
-                }
-                if(result instanceof Boolean){
-                    if((Boolean) result){
-                        log.info(event + " consumed");
-                        break;
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+                result = subscription.getConsumer().invoke(subscription.getSubscriber(), params);
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e){
-                log.warn(event + " unvalid number of args on event invokation.");
+                log.warn(event + " unvalid number of args on event invokation. Aborting.");
+            }
+            subscription.setMaxConsumption(subscription.getMaxConsumption()-1);
+            if(subscription.getMaxConsumption() == 0){
+                expired.add(subscription);
+            }
+            if(result != null && result instanceof Boolean){
+                if((Boolean) result){
+                    log.info(event + " consumed");
+                    break;
+                }
             }
         }
         subscriptions.removeAll(expired);
