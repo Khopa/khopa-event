@@ -1,8 +1,6 @@
 package com.khopa.spring.event.poc;
 
 import com.khopa.spring.event.annotations.Consume;
-import com.khopa.spring.event.annotations.ProduceAfter;
-import com.khopa.spring.event.annotations.ProduceBefore;
 import com.khopa.spring.event.models.Consumer;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.stereotype.Component;
@@ -13,21 +11,21 @@ public class ComponentB extends Consumer{
 
     @Consume
     public boolean onEventB(){
-        System.out.println("B - B");
+        log.debug("B - B");
         eventManager.fire("EventD");
         return false;
     }
 
     @Consume
     public boolean onEventC(){
-        System.out.println("B - C");
+        log.debug("B - C");
         eventManager.fire("EventD");
         return false;
     }
 
     @Consume
     public boolean onEventD(){
-        System.out.println("B - D");
+        log.debug("B - D");
         return false;
     }
 

@@ -3,7 +3,9 @@ package com.khopa.spring.event.poc;
 import com.khopa.spring.event.annotations.Consume;
 import com.khopa.spring.event.models.Consumer;
 import lombok.Getter;
+import lombok.extern.apachecommons.CommonsLog;
 
+@CommonsLog
 public class ComponentA extends Consumer {
 
     @Getter int a = 0;
@@ -11,25 +13,25 @@ public class ComponentA extends Consumer {
 
     @Consume(max = 1)
     public boolean onEventA(){
-        System.out.println("A - A");
+        log.debug("A - A");
         return true;
     }
 
     @Consume(max = 1, event = "EventA")
     public boolean onEventA2(){
-        System.out.println("A - A2");
+        log.debug("A - A2");
         return true;
     }
 
     @Consume(event = "evt_125634")
     public boolean onEventSpecialName(){
-        System.out.println("A - evt_125634");
+        log.debug("A - evt_125634");
         return false;
     }
 
     @Consume
     public boolean onEventB(){
-        System.out.println("A - B");
+        log.debug("A - B");
         return false;
     }
 
