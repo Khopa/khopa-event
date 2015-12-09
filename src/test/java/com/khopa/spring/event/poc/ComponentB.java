@@ -26,16 +26,14 @@ public class ComponentB extends Consumer{
     }
 
     @Consume
-    @ProduceAfter
     public boolean onEventD(){
         System.out.println("B - D");
         return false;
     }
 
     @Consume(event = "evt_274896")
-    @ProduceBefore
-    public boolean onSomeModelCreated(SomeModel someModel){
-        log.info("Some model created");
+    public boolean onSomeModelData(SomeModel someModel){
+        log.info("Some model data");
         log.info(someModel.getName());
         log.info(someModel.getA());
         log.info(someModel.getB());

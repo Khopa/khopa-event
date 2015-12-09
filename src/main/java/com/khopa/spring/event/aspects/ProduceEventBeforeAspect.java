@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @CommonsLog
 public class ProduceEventBeforeAspect {
 
-    @Before(value = "@annotation(ProduceBefore)")
+    /*@Before(value = "@annotation(ProduceBefore)", argNames="joinPoint")
     public void before(JoinPoint joinPoint, ProduceBefore produceBefore) throws Throwable {
         log.info("before, class: " + joinPoint.getSignature().getDeclaringType().getSimpleName() + ", method: " + joinPoint.getSignature().getName());
-    }
+    }*/
 
 }

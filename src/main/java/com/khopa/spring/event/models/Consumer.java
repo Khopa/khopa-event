@@ -16,7 +16,6 @@ public class Consumer {
 
     @PostConstruct
     public void postConstruct(){
-        System.out.println("POST CONSTRUCT");
         eventManager.subscribe(this);
     }
 
