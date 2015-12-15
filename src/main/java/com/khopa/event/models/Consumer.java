@@ -1,6 +1,6 @@
-package com.khopa.spring.event.models;
+package com.khopa.event.models;
 
-import com.khopa.spring.event.EventManager;
+import com.khopa.event.EventManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

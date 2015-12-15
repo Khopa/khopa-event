@@ -1,4 +1,4 @@
-package com.khopa.spring.event.poc;
+package com.khopa.event.poc;
 
 import lombok.Data;
 

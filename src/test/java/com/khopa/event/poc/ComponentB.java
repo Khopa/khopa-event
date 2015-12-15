@@ -1,7 +1,7 @@
-package com.khopa.spring.event.poc;
+package com.khopa.event.poc;
 
-import com.khopa.spring.event.annotations.Consume;
-import com.khopa.spring.event.models.Consumer;
+import com.khopa.event.annotations.Consume;
+import com.khopa.event.models.Consumer;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.stereotype.Component;
 

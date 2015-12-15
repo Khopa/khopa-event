@@ -1,4 +1,4 @@
-package com.khopa.spring.event.models;
+package com.khopa.event.models;
 
 import lombok.Data;
 

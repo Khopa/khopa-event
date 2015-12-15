@@ -1,4 +1,4 @@
-package com.khopa.spring.event.annotations;
+package com.khopa.event.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
