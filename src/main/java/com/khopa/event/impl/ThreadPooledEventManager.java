@@ -1,9 +1,7 @@
-package com.khopa.spring.event.impl;
+package com.khopa.event.impl;
 
-import com.khopa.spring.event.models.Subscription;
 import lombok.extern.apachecommons.CommonsLog;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

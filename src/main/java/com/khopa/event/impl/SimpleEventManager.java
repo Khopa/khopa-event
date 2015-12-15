@@ -1,16 +1,13 @@
-package com.khopa.spring.event.impl;
+package com.khopa.event.impl;
 
-import com.khopa.spring.event.EventManager;
-import com.khopa.spring.event.annotations.Consume;
-import com.khopa.spring.event.models.Subscription;
-import lombok.Synchronized;
+import com.khopa.event.EventManager;
+import com.khopa.event.annotations.Consume;
+import com.khopa.event.models.Subscription;
 import lombok.extern.apachecommons.CommonsLog;
 
-import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 

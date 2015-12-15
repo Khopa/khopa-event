@@ -1,4 +1,4 @@
-package com.khopa.spring.event;
+package com.khopa.event;
 
 import org.springframework.stereotype.Component;
 
