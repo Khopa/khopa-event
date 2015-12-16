@@ -3,6 +3,7 @@ khopa-event
 
 Simple & easy to use event manager for java/spring. 
 
+
 How to use :
 ------------
 
@@ -139,8 +140,45 @@ If the consume method return a boolean, returning true will stop event propagati
 There is currently no priority system so this is kinda useless/random but as this may exists as a feature in the future, this feature is currently implemented as is.
 
 
+Add to maven project :
+----------------------
 
+**Step 1. Add the JitPack repository to your build file**
 
+```
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+**Step 2. Add the dependency**
+
+```
+<dependency>
+    <groupId>com.github.Khopa</groupId>
+    <artifactId>khopa-event</artifactId>
+    <version>0.1-RELEASE</version>
+</dependency>
+```
+
+Add to gradle project :
+-----------------------
+
+```
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+
+dependencies {
+        compile 'com.github.Khopa:khopa-event:0.1-RELEASE'
+}
+```
 
 
 
