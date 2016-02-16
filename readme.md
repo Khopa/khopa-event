@@ -9,13 +9,13 @@ How to use :
 
 **Step 1 - Add an event manager to your application context**
 
-```
+```xml
 <bean id="eventManager" class="com.khopa.event.impl.SimpleEventManager"/>
 ```
 
 **Step 2 - Subscribe to event**
 
-```
+```java
 @Component public class SomeComponent{
 
     @Autowired private EventManager eventManager;
@@ -46,7 +46,7 @@ How to use :
 
 Or extends consumer class to automatically subscribe on the event manager.
 
-```
+```java
 /**
  * Equivalent to the previous code
  */
@@ -70,7 +70,7 @@ Or extends consumer class to automatically subscribe on the event manager.
 
 **Step 3 - Fire events from anywhere**
 
-```
+```java
 // Fire an event without parameters
 eventManager.fire("someEvent")
 
@@ -87,7 +87,7 @@ That's for the gist of it.
 
 Use the ThreadPooledEventManager as your EventManager if you want to dispatch event processing on separate threads.
 
-```
+```xml
 <bean id="eventManager" class="com.khopa.event.impl.ThreadPooledEventManager">
     <constructor-arg name="threadCount" value="8"/> <!-- Setup here the number of thread you need in your pool -->
 </bean>
@@ -97,7 +97,7 @@ Use the ThreadPooledEventManager as your EventManager if you want to dispatch ev
 
 By default the subscribing method name is used to determine the event bound to it. However you can also force the event name manually as a parameter in the Consume annotation.
 
-```
+```java
 @Consume(event = "イベント")
 public boolean thisMethodNameIsNotRelevant(int dontForgetParamsAreAllowed){
     log.info("イベント called : " + String.valueOf(dontForgetParamsAreAllowed);
@@ -107,7 +107,7 @@ public boolean thisMethodNameIsNotRelevant(int dontForgetParamsAreAllowed){
 
 Will be triggered if you call :
 
-```
+```java
 eventManager.fire("イベント", 13)
 ```
 
@@ -117,7 +117,7 @@ Yes, it may be cool to support regexes and/or routing parameters in future itera
 
 The @Consume annotation can take a parameter to limit the number of event that can be received :
 
-```
+```java
 // This method will be called at most 10 time per subscribing instance.
 @Consume(max = 10)
 public boolean onEventA(){
@@ -130,7 +130,7 @@ public boolean onEventA(){
 
 If the consume method return a boolean, returning true will stop event propagation to others subscribers.
 
-```
+```java
 @Consume public boolean onSomeEventWithParams(String p1, String p2, int p3){
     log.debug("on some event with params");
     return true; // No other subscribers will receive the event after this consumer.
@@ -145,7 +145,7 @@ Add to maven project :
 
 **Step 1. Add the JitPack repository to your build file**
 
-```
+```xml
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -156,7 +156,7 @@ Add to maven project :
 
 **Step 2. Add the dependency**
 
-```
+```xml
 <dependency>
     <groupId>com.github.Khopa</groupId>
     <artifactId>khopa-event</artifactId>
@@ -167,7 +167,7 @@ Add to maven project :
 Add to gradle project :
 -----------------------
 
-```
+```groovy
 allprojects {
     repositories {
         ...
